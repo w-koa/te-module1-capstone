@@ -69,4 +69,10 @@ public abstract class Item implements DispensingSound {
 	public String getSound() {
 		return sound;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%-5s %-20s     $%.2f     %-5s %4s", this.slotLocation, this.name, this.price 
+				, this.type, this.stock);
+	}
 }

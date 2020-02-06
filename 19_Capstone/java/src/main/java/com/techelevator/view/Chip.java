@@ -1,8 +1,8 @@
 package com.techelevator.view;
 
-public class Chips extends Item{
+public class Chip extends Item{
 
-	public Chips(String[] source) {
+	public Chip(String[] source) {
 		super(source);
 	}
 	
