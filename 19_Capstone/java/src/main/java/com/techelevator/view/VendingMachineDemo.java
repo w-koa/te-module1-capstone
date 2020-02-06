@@ -2,13 +2,16 @@ package com.techelevator.view;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class VendingMachineDemo {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		
 		String [] array = {"A1", "Cloud popconrs", "2.99", "chips"};
 
@@ -50,8 +53,23 @@ public class VendingMachineDemo {
 		}
 		
 		fileScanner.close();
-		
-		
+		String path2 = "log.txt";
+		File file2 = new File(path2);
+		if (file2.exists()) {
+			System.out.println("File information: ");
+			System.out.println("\tName: " + file2.getName());
+			System.out.println("\tAbsolute Path: " + file2.getAbsolutePath());
+			System.out.println("\tSize: " + file2.length());
+			
+			if (file2.isDirectory()) {
+				System.out.println("\ttype: directory");
+			}
+			if (file2.isFile()) {
+				System.out.println("\ttype: file");
+			}
+		} else {
+			System.out.println("file does not exist");
+		}
 }
 }
 
