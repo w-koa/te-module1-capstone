@@ -35,6 +35,8 @@ public class VendingMachineCLI {
 		
 		while(fileScanner.hasNextLine()) {
 			String line = fileScanner.nextLine();
+			String [] lineArray = line.split("|");
+			
 			System.out.println(line);
 		}
 		

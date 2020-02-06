@@ -1,6 +1,7 @@
+package com.techelevator.view;
 import java.math.BigDecimal;
 
-public abstract class Item {
+public abstract class Item implements DispensingSound {
 
 	// Attributes
 	private String slotLocation;
@@ -8,8 +9,13 @@ public abstract class Item {
 	private BigDecimal price;
 	private String type;
 	private String stock;
+	private String sound;
 	
 	// Constructor takes string array from line read.
+	
+	public Item(String sound) {
+		this.sound = sound; 
+	}
 	public Item(String[] source) {
 		this.slotLocation = source[0];
 		this.name = source[1];
@@ -19,6 +25,11 @@ public abstract class Item {
 	}
 
 	// Methods
+	@Override
+	public String getDispenseSound() {
+		return sound;
+	}
+	
 	public void decrementStock() {
 		int intStock = Integer.parseInt(this.stock);
 		if(intStock > 1) {
