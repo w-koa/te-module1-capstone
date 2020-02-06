@@ -163,17 +163,28 @@ public class VendingMachineCLI {
 					}
 					
 				} else if(choice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)){
-					BigDecimal balanceInPennies = currentBalance.multiply(new BigDecimal(100));
-					BigDecimal dollars = balanceInPennies.divide(new BigDecimal(100));
-					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(100)));
-					BigDecimal quarters = balanceInPennies.divide(new BigDecimal(25));
-					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(25)));
-					BigDecimal dimes = balanceInPennies.divide(new BigDecimal(10));
-					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(10)));
-					BigDecimal nickels = balanceInPennies.divide(new BigDecimal(5));
-					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(5)));
-					BigDecimal pennies = balanceInPennies;
-					System.out.println("Your change is: " + dollars + "dollars, " + quarters + "quarters, " + dimes + "dimes, " + nickels + "nickels and " + pennies + " pennies");
+					int change = currentBalance.multiply(new BigDecimal(100)).intValue();
+					int dollars = Math.round((int)change/100);
+				    change=change%100;
+				    int quarters = Math.round((int)change/25);
+				    change=change%25;
+				    int dimes = Math.round((int)change/10);
+				    change=change%10;
+				    int nickels = Math.round((int)change/5);
+				    change=change%5;
+				    int pennies = Math.round((int)change/1);
+					
+//					BigDecimal balanceInPennies = currentBalance.multiply(new BigDecimal(100));
+//					BigDecimal dollars = balanceInPennies.divide(new BigDecimal(100));
+//					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(100)));
+//					BigDecimal quarters = balanceInPennies.divide(new BigDecimal(25));
+//					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(25)));
+//					BigDecimal dimes = balanceInPennies.divide(new BigDecimal(10));
+//					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(10)));
+//					BigDecimal nickels = balanceInPennies.divide(new BigDecimal(5));
+//					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(5)));
+//					BigDecimal pennies = balanceInPennies;
+					System.out.println("Your change is: " + dollars + " dollars, " + quarters + " quarters, " + dimes + " dimes, " + nickels + " nickels and " + pennies + " pennies");
 
 					
 				}
