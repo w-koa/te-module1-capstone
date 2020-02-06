@@ -1,5 +1,9 @@
 package com.techelevator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import com.techelevator.view.Menu;
 
 public class VendingMachineCLI {
@@ -23,9 +27,20 @@ public class VendingMachineCLI {
 		this.menu = menu;
 	}
 
-	public void run() {
+	public void run() throws FileNotFoundException {
 		//read in the file
+		File vendingMachineFile = getFileFromUser();
+		Scanner fileScanner = new Scanner(vendingMachineFile);
+
 		
+		while(fileScanner.hasNextLine()) {
+			String line = fileScanner.nextLine();
+			System.out.println(line);
+		}
+		
+		fileScanner.close();
+	
+			
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -38,11 +53,30 @@ public class VendingMachineCLI {
 				choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			}
 		}
-	}
+}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();
+	}
+	
+	
+	
+	@SuppressWarnings("resource")
+	private static File getFileFromUser() {
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("Please enter path to input file >>> ");
+		String path = userInput.nextLine();
+		
+		File inputFile = new File(path);
+		if (inputFile.exists() == false) {
+			System.out.println(path + " does not exist");
+			System.exit(1);
+		} else if (inputFile.isFile() == false) {
+			System.out.println(path + " is not a valid file");
+			System.exit(1);
+		}
+		return inputFile;
 	}
 }
