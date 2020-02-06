@@ -8,13 +8,14 @@ public class VendingMachineDemo {
 
 		Item chips = new Chips(array);
 		
-		chips.getDispenseSound();
 		
 		System.out.println(chips.getName());
 		System.out.println(chips.getSlotLocation());
 		System.out.println(chips.getStock());
 		System.out.println(chips.getType());
 		System.out.println(chips.getPrice());
+		System.out.println(chips.getSound());
+		System.out.println(chips.getSound());
 		
 
 }

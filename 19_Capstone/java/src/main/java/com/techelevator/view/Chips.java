@@ -6,12 +6,9 @@ public class Chips extends Item{
 		super(source);
 	}
 	
-	public Chips(String sound) {
-		super("Crunch Crunch, YUM");
+	@Override
+	public String getSound() {
+		return "Crunch Crunch, YUM!";
 	}
-	
-//	public Chips(String[] source) {
-//	
-//	}
 
 }

@@ -22,13 +22,9 @@ public abstract class Item implements DispensingSound {
 		this.price = new BigDecimal(source[2]);
 		this.type = source[3];
 		this.stock = "5";
+		this.sound = "";
 	}
 
-	// Methods
-	@Override
-	public String getDispenseSound() {
-		return sound;
-	}
 	
 	public void decrementStock() {
 		int intStock = Integer.parseInt(this.stock);
@@ -45,6 +41,8 @@ public abstract class Item implements DispensingSound {
 //		} else return "SOLD OUT"
 		
 	}
+	
+	
 	
 	// Getters
 	public String getSlotLocation() {
@@ -66,7 +64,9 @@ public abstract class Item implements DispensingSound {
 	public String getStock() {
 		return stock;
 	}
-	
-	
-	
+
+	@Override
+	public String getSound() {
+		return sound;
+	}
 }
