@@ -2,6 +2,7 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -28,6 +29,11 @@ public class VendingMachineCLI {
 	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
 	private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
 	private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
+	private static final String PURCHASE_MENU_FEED_ONE_DOLLAR = "$1";
+	private static final String PURCHASE_MENU_FEED_TWO_DOLLARS = "$2";
+	private static final String PURCHASE_MENU_FEED_FIVE_DOLLARS = "$5";
+	private static final String PURCHASE_MENU_FEED_TEN_DOLLARS = "$10";
+	private static final String[] PURCHASE_MENU_FEED_OPTIONS = {PURCHASE_MENU_FEED_ONE_DOLLAR, PURCHASE_MENU_FEED_TWO_DOLLARS, PURCHASE_MENU_FEED_FIVE_DOLLARS, PURCHASE_MENU_FEED_TEN_DOLLARS};
 	private Menu menu;
 
 	public VendingMachineCLI(Menu menu) {
@@ -61,7 +67,8 @@ public class VendingMachineCLI {
 		
 		fileScanner.close();
 	
-			
+		BigDecimal currentBalance = new BigDecimal(0);
+		
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -77,6 +84,22 @@ public class VendingMachineCLI {
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
 				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+				if(choice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
+					choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_FEED_OPTIONS);
+
+				} if (choice.equals(PURCHASE_MENU_FEED_ONE_DOLLAR)) {
+					currentBalance = currentBalance.add(new BigDecimal(1));
+					System.out.println("Your current balance is now $" + currentBalance);
+				} else if (choice.equals(PURCHASE_MENU_FEED_TWO_DOLLARS)) {
+					currentBalance = currentBalance.add(new BigDecimal(2));
+					System.out.println("Your current balance is now $" + currentBalance);
+				} else if (choice.equals(PURCHASE_MENU_FEED_FIVE_DOLLARS)) {
+					currentBalance = currentBalance.add(new BigDecimal(5));
+					System.out.println("Your current balance is now $" + currentBalance);
+				} else if (choice.equals(PURCHASE_MENU_FEED_TEN_DOLLARS)) {
+					currentBalance = currentBalance.add(new BigDecimal(10));
+					System.out.println("Your current balance is now $" + currentBalance);
+				} 
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			}

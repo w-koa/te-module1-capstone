@@ -49,10 +49,6 @@ public class VendingMachineDemo {
 			}
 		}
 		
-		for (Item item : itemList) {
-			System.out.println(drink.toString());
-		}
-		
 		fileScanner.close();
 		
 		
