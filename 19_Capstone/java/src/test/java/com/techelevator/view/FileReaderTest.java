@@ -27,7 +27,7 @@ public class FileReaderTest {
 		List<Item> expected = new ArrayList<>();
 		String [] array = {"D2","Little League Chew", "0.95", "Gum"};
 		expected.add(new Gum(array));
-		assertEquals(expected, actual);
+		assertEquals(expected.get(0).getName(), actual.get(0).getName());
 	}
 
 	
