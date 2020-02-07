@@ -8,9 +8,9 @@ import java.util.Scanner;
 
 public class FileReader {
 	
-	public static List<Item> fileReader() throws FileNotFoundException{
+	public static List<Item> fileReader(String path) throws FileNotFoundException{
 		
-	String path = "vendingmachine.csv";
+	//String path = "vendingmachine.csv";
 	File file = new File(path);
 	Scanner fileScanner = new Scanner(file);
 

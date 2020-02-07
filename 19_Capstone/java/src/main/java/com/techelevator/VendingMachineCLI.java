@@ -1,21 +1,11 @@
 package com.techelevator;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import com.techelevator.view.Candy;
-import com.techelevator.view.Chip;
-import com.techelevator.view.Drink;
 import com.techelevator.view.FileReader;
-import com.techelevator.view.Gum;
 import com.techelevator.view.Item;
 import com.techelevator.view.Logger;
 import com.techelevator.view.MakeChangeMethod;
@@ -37,7 +27,7 @@ public class VendingMachineCLI {
 
 	public void run() throws IOException {
 
-		List<Item> itemList = FileReader.fileReader();
+		List<Item> itemList = FileReader.fileReader("vendingmachine.csv");
 
 		Scanner input = new Scanner(System.in);
 
@@ -51,7 +41,7 @@ public class VendingMachineCLI {
 				FileReader.displayItems(itemList);
 
 			} else if (choice.equals(MenuConstants.MAIN_MENU_OPTION_PURCHASE)) {
-				// do purchase
+				// do purchase 
 				boolean purchaseMenu = true;
 				while (purchaseMenu) {
 					choice = (String) menu.getChoiceFromOptions(MenuConstants.PURCHASE_MENU_OPTIONS);
@@ -68,17 +58,17 @@ public class VendingMachineCLI {
 
 							} else if (choice.equals(MenuConstants.PURCHASE_MENU_FEED_TWO_DOLLARS)) {
 								logger.feedLogger(currentBalance, 2);
-								currentBalance = currentBalance.add(new BigDecimal(2.00));
+								currentBalance = currentBalance.add(new BigDecimal(2.00).setScale(2));
 								System.out.println("Your current balance is now $" + currentBalance);
 
 							} else if (choice.equals(MenuConstants.PURCHASE_MENU_FEED_FIVE_DOLLARS)) {
 								logger.feedLogger(currentBalance, 5);
-								currentBalance = currentBalance.add(new BigDecimal(5.00));
+								currentBalance = currentBalance.add(new BigDecimal(5.00).setScale(2));
 								System.out.println("Your current balance is now $" + currentBalance);
 
 							} else if (choice.equals(MenuConstants.PURCHASE_MENU_FEED_TEN_DOLLARS)) {
 								logger.feedLogger(currentBalance, 10);
-								currentBalance = currentBalance.add(new BigDecimal(10.00));
+								currentBalance = currentBalance.add(new BigDecimal(10.00).setScale(2));
 								System.out.println("Your current balance is now $" + currentBalance);
 							} else if (choice.equals(MenuConstants.MENU_GO_BACK)) {
 								feedMenu = false;
@@ -92,7 +82,7 @@ public class VendingMachineCLI {
 						System.out.println("");
 						System.out.println("Select item: ");
 						String select = input.nextLine();
-
+						
 						boolean itemFound = false;
 						for (Item item : itemList) {
 							if (item.getSlotLocation().equals(select)) {
@@ -120,18 +110,19 @@ public class VendingMachineCLI {
 
 						MakeChangeMethod.makeChange(currentBalance);
 						logger.changeLogger(currentBalance);
-						currentBalance = new BigDecimal(0);
+						currentBalance = new BigDecimal("0");
 						purchaseMenu = false;
 
 					} else if (choice.equals(MenuConstants.MENU_GO_BACK)) {
 						purchaseMenu = false;
 					}
-					else if (choice.equals(MenuConstants.MAIN_MENU_OPTION_EXIT)) {
-
-						choice = (String) menu.getChoiceFromOptions(MenuConstants.MAIN_MENU_OPTIONS);
-					}
 				}
+			} else if (choice.equals(MenuConstants.MAIN_MENU_OPTION_EXIT)) {
+
+				input.close();
+				break;
 			}
+
 		}
 	}
 
