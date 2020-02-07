@@ -14,9 +14,11 @@ import java.util.Scanner;
 import com.techelevator.view.Candy;
 import com.techelevator.view.Chip;
 import com.techelevator.view.Drink;
+import com.techelevator.view.FileReader;
 import com.techelevator.view.Gum;
 import com.techelevator.view.Item;
 import com.techelevator.view.Logger;
+import com.techelevator.view.MakeChangeMethod;
 import com.techelevator.view.Menu;
 import com.techelevator.view.MenuConstants;
 
@@ -34,44 +36,10 @@ public class VendingMachineCLI {
 	}
 
 	public void run() throws IOException {
-		// read in the file
-		String path = "vendingmachine.csv";
-		File file = new File(path);
-		Scanner fileScanner = new Scanner(file);
-		Scanner input = new Scanner(System.in);
 		
-		FileWriter fileWriter = new FileWriter("log.txt", true);
-		PrintWriter printWriter = new PrintWriter(fileWriter);
-
-		// Date object
-		Date date = new Date();
-		// getTime() returns current time in milliseconds
-		long time = date.getTime();
-		// Passed the milliseconds to constructor of Timestamp class
-		Timestamp ts = new Timestamp(time);
-		System.out.println("Current Time Stamp: " + ts);
-
-		List<Item> itemList = new ArrayList<Item>();
-
-		while (fileScanner.hasNextLine()) {
-			String line = fileScanner.nextLine();
-			String[] lineArray = line.split("\\|");
-			if (lineArray[3].equals("Chip")) {
-				Item chips = new Chip(lineArray);
-				itemList.add(chips);
-			} else if (lineArray[3].equals("Candy")) {
-				Item candy = new Candy(lineArray);
-				itemList.add(candy);
-			} else if (lineArray[3].equals("Drink")) {
-				Item drink = new Drink(lineArray);
-				itemList.add(drink);
-			} else if (lineArray[3].equals("Gum")) {
-				Item gum = new Gum(lineArray);
-				itemList.add(gum);
-			}
-		}
-
-		fileScanner.close();
+		List <Item> itemList = FileReader.fileReader();
+		
+		Scanner input = new Scanner(System.in);
 
 		BigDecimal currentBalance = new BigDecimal(0.00);
 		Logger logger = new Logger();
@@ -80,21 +48,14 @@ public class VendingMachineCLI {
 			String choice = (String) menu.getChoiceFromOptions(MenuConstants.MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MenuConstants.MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				// display vending machine items
-				System.out.println(String.format("%-5s %-20s     $%6s   %-8s %5s", "Slot", "Item Name", "Price", "Type",
-						"Quantity"));
-				System.out.println("==========================================================");
-				for (Item item : itemList) {
-					System.out.println(item.toString());
-				}
+				FileReader.displayItems(itemList);
 
 			} else if (choice.equals(MenuConstants.MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
 				boolean purchaseMenu = true;
 				while (purchaseMenu) {
 				choice = (String) menu.getChoiceFromOptions(MenuConstants.PURCHASE_MENU_OPTIONS);
-				
-				
+					
 				if (choice.equals(MenuConstants.PURCHASE_MENU_OPTION_FEED_MONEY)) {
 					choice = (String) menu.getChoiceFromOptions(MenuConstants.PURCHASE_MENU_FEED_OPTIONS);
 					if (choice.equals(MenuConstants.PURCHASE_MENU_FEED_ONE_DOLLAR)) {
@@ -118,25 +79,19 @@ public class VendingMachineCLI {
 						System.out.println("Your current balance is now $" + currentBalance);
 					}
 
-				}
-				if (choice.equals(MenuConstants.PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
-					System.out.println(String.format("%-5s %-20s     $%6s   %-8s %5s", "Slot", "Item Name", "Price",
-							"Type", "Quantity"));
-					System.out.println("==========================================================");
-					for (Item item : itemList) {
-						System.out.println(item.toString());
-
-					}
+				} if (choice.equals(MenuConstants.PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
+					FileReader.displayItems(itemList);
 					System.out.println("");
 					System.out.println("Select item: ");
 					String select = input.nextLine();
 					
+					boolean itemFound = false;
 					for (Item item : itemList) {
-						if (item.getSlotLocation().equals(select) && !item.getStock().equals("SOLD OUT")) {
+						if (item.getSlotLocation().equals(select)) {
+							itemFound = true;
 							if (item.getStock().equals("SOLD OUT")) {
 								System.out.println("Sorry, item is SOLD OUT");
-							} else
-							if (currentBalance.compareTo(item.getPrice()) >= 0) {
+							} else if (currentBalance.compareTo(item.getPrice()) >= 0) {
 								logger.purchaseLogger(currentBalance, item.getPrice(), item.getName(), item.getSlotLocation());
 								currentBalance = currentBalance.subtract(item.getPrice());
 								item.decrementStock();
@@ -147,57 +102,28 @@ public class VendingMachineCLI {
 								System.out.println("You do not have enough money!");
 							} 
 						}
+					} if (itemFound = false) {
+						System.out.println("Selection is invalid");
 					}
 					
 				} else if(choice.equals(MenuConstants.PURCHASE_MENU_OPTION_FINISH_TRANSACTION)){
 					
-					int change = currentBalance.multiply(new BigDecimal(100)).intValue();
-					int dollars = Math.round((int)change/100);
-				    change=change%100;
-				    int quarters = Math.round((int)change/25);
-				    change=change%25;
-				    int dimes = Math.round((int)change/10);
-				    change=change%10;
-				    int nickels = Math.round((int)change/5);
-				    change=change%5;
-				    int pennies = Math.round((int)change/1);
-				    purchaseMenu = false;
+					MakeChangeMethod.makeChange(currentBalance);
 				    logger.changeLogger(currentBalance);
 				    currentBalance = new BigDecimal(0);
-					System.out.println("Your change is: " + dollars + " dollars, " + quarters + " quarters, " + dimes + " dimes, " + nickels + " nickels and " + pennies + " pennies");
-
 				
-				}
-				
-				else if (choice.equals(MenuConstants.MAIN_MENU_OPTION_EXIT)) {
+				}else if (choice.equals(MenuConstants.MAIN_MENU_OPTION_EXIT)) {
 					
 					choice = (String) menu.getChoiceFromOptions(MenuConstants.MAIN_MENU_OPTIONS);
-				}
 				}
 			}
 		}
 	}
+}
 	
 	public static void main(String[] args) throws IOException {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();
 	}
-
-//	@SuppressWarnings("resource")
-//	private static File getFileFromUser() {
-//		Scanner userInput = new Scanner(System.in);
-//		System.out.println("Please enter path to input file >>> ");
-//		String path = userInput.nextLine();
-//		
-//		File inputFile = new File(path);
-//		if (inputFile.exists() == false) {
-//			System.out.println(path + " does not exist");
-//			System.exit(1);
-//		} else if (inputFile.isFile() == false) {
-//			System.out.println(path + " is not a valid file");
-//			System.exit(1);
-//		}
-//		return inputFile;
-//	}
 }
