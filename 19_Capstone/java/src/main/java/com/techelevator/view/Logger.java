@@ -16,16 +16,17 @@ public class Logger {
 	 long time = date.getTime();
         //Passed the milliseconds to constructor of Timestamp class 
 	 Timestamp ts = new Timestamp(time);
-//	 System.out.println("Current Time Stamp: "+ts);
+//	 System.out.println("Current Time Stamp: "+ts); 
 	 
-	public void feedLogger(BigDecimal currentAmount, int feedAmount) throws IOException {
+	public String feedLogger(BigDecimal currentAmount, int feedAmount) throws IOException {
 		FileWriter fileWriter = new FileWriter("log.txt", true);
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 		printWriter.println(ts + " FEED MONEY: $" + currentAmount + " $" +
 				currentAmount.add(new BigDecimal(feedAmount).setScale(2)));
 	
 		 printWriter.close();
-		 
+		 return (ts + " FEED MONEY: $" + currentAmount + " $" +
+					currentAmount.add(new BigDecimal(feedAmount).setScale(2)));
 	}
 	
 	public void purchaseLogger(BigDecimal currentAmount, BigDecimal purchaseAmount, String itemName, String itemSlot) throws IOException {

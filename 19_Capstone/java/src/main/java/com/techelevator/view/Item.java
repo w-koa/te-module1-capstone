@@ -24,22 +24,19 @@ public abstract class Item implements DispensingSound {
 		this.stock = "5";
 		this.sound = "";
 	}
-
+ 
 	
-	public void decrementStock() {
+	public boolean decrementStock() {
+		boolean changedStock = false;
 		int intStock = Integer.parseInt(this.stock);
 		if(intStock > 1) {
 			intStock --;
 			this.stock = Integer.toString(intStock);
-		} else { 
+			changedStock = true;
+		} else if (intStock == 1) { 
 			this.stock = "SOLD OUT";
-		}
-//		if (this.stock > 0) {
-//			this.stock--;
-//			String stockString = Integer.toString(this.stock);
-//			return stockString;
-//		} else return "SOLD OUT"
-		
+			changedStock = true;
+		} return changedStock;		
 	}
 	
 	
