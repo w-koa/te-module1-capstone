@@ -26,23 +26,7 @@ public class VendingMachineCLI {
 	// determine what type of object
 	// create the corresponding object for that type
 	// load that object into an array or an arrayList
-//
-//	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
-//	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
-//	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
-//	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE,
-//			MAIN_MENU_OPTION_EXIT };
-//	private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed Money";
-//	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
-//	private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
-//	private static final String[] PURCHASE_MENU_OPTIONS = { PURCHASE_MENU_OPTION_FEED_MONEY,
-//			PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION };
-//	private static final String PURCHASE_MENU_FEED_ONE_DOLLAR = "$1";
-//	private static final String PURCHASE_MENU_FEED_TWO_DOLLARS = "$2";
-//	private static final String PURCHASE_MENU_FEED_FIVE_DOLLARS = "$5";
-//	private static final String PURCHASE_MENU_FEED_TEN_DOLLARS = "$10";
-//	private static final String[] PURCHASE_MENU_FEED_OPTIONS = { PURCHASE_MENU_FEED_ONE_DOLLAR,
-//			PURCHASE_MENU_FEED_TWO_DOLLARS, PURCHASE_MENU_FEED_FIVE_DOLLARS, PURCHASE_MENU_FEED_TEN_DOLLARS };
+
 	private Menu menu;
 
 	public VendingMachineCLI(Menu menu) {
