@@ -18,13 +18,30 @@ public class Logger {
 	 Timestamp ts = new Timestamp(time);
 //	 System.out.println("Current Time Stamp: "+ts);
 	 
-	public void feedLogger(BigDecimal amount, int feedAmount) throws IOException {
+	public void feedLogger(BigDecimal currentAmount, int feedAmount) throws IOException {
 		FileWriter fileWriter = new FileWriter("log.txt", true);
 		PrintWriter printWriter = new PrintWriter(fileWriter);
-		printWriter.println(ts + " FEED MONEY: $" + amount + " $" +
-				amount.add(new BigDecimal(feedAmount).setScale(2)));
+		printWriter.println(ts + " FEED MONEY: $" + currentAmount + " $" +
+				currentAmount.add(new BigDecimal(feedAmount).setScale(2)));
 	
+		 printWriter.close();
 		 
-		 
+	}
+	
+	public void purchaseLogger(BigDecimal currentAmount, BigDecimal purchaseAmount, String itemName, String itemSlot) throws IOException {
+		FileWriter fileWriter = new FileWriter("log.txt", true);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+		printWriter.println(ts + " " + itemName + " " + itemSlot + " $" + currentAmount +
+				" $" + currentAmount.subtract(purchaseAmount.setScale(2)));
+	
+		 printWriter.close();
+	}
+	
+	public void changeLogger(BigDecimal currentAmount) throws IOException {
+		FileWriter fileWriter = new FileWriter("log.txt", true);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+		printWriter.println(ts + " GIVE CHANGE: $" + currentAmount + " $0.00");
+	
+		 printWriter.close();
 	}
 }

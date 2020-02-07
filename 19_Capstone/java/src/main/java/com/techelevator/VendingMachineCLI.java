@@ -18,6 +18,7 @@ import com.techelevator.view.Gum;
 import com.techelevator.view.Item;
 import com.techelevator.view.Logger;
 import com.techelevator.view.Menu;
+import com.techelevator.view.MenuConstants;
 
 public class VendingMachineCLI {
 
@@ -25,23 +26,23 @@ public class VendingMachineCLI {
 	// determine what type of object
 	// create the corresponding object for that type
 	// load that object into an array or an arrayList
-
-	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
-	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
-	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
-	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE,
-			MAIN_MENU_OPTION_EXIT };
-	private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed Money";
-	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
-	private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
-	private static final String[] PURCHASE_MENU_OPTIONS = { PURCHASE_MENU_OPTION_FEED_MONEY,
-			PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION };
-	private static final String PURCHASE_MENU_FEED_ONE_DOLLAR = "$1";
-	private static final String PURCHASE_MENU_FEED_TWO_DOLLARS = "$2";
-	private static final String PURCHASE_MENU_FEED_FIVE_DOLLARS = "$5";
-	private static final String PURCHASE_MENU_FEED_TEN_DOLLARS = "$10";
-	private static final String[] PURCHASE_MENU_FEED_OPTIONS = { PURCHASE_MENU_FEED_ONE_DOLLAR,
-			PURCHASE_MENU_FEED_TWO_DOLLARS, PURCHASE_MENU_FEED_FIVE_DOLLARS, PURCHASE_MENU_FEED_TEN_DOLLARS };
+//
+//	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
+//	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
+//	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
+//	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE,
+//			MAIN_MENU_OPTION_EXIT };
+//	private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed Money";
+//	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
+//	private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
+//	private static final String[] PURCHASE_MENU_OPTIONS = { PURCHASE_MENU_OPTION_FEED_MONEY,
+//			PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION };
+//	private static final String PURCHASE_MENU_FEED_ONE_DOLLAR = "$1";
+//	private static final String PURCHASE_MENU_FEED_TWO_DOLLARS = "$2";
+//	private static final String PURCHASE_MENU_FEED_FIVE_DOLLARS = "$5";
+//	private static final String PURCHASE_MENU_FEED_TEN_DOLLARS = "$10";
+//	private static final String[] PURCHASE_MENU_FEED_OPTIONS = { PURCHASE_MENU_FEED_ONE_DOLLAR,
+//			PURCHASE_MENU_FEED_TWO_DOLLARS, PURCHASE_MENU_FEED_FIVE_DOLLARS, PURCHASE_MENU_FEED_TEN_DOLLARS };
 	private Menu menu;
 
 	public VendingMachineCLI(Menu menu) {
@@ -92,9 +93,9 @@ public class VendingMachineCLI {
 		Logger logger = new Logger();
 
 		while (true) {
-			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
+			String choice = (String) menu.getChoiceFromOptions(MenuConstants.MAIN_MENU_OPTIONS);
 
-			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
+			if (choice.equals(MenuConstants.MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				// display vending machine items
 				System.out.println(String.format("%-5s %-20s     $%6s   %-8s %5s", "Slot", "Item Name", "Price", "Type",
 						"Quantity"));
@@ -103,37 +104,38 @@ public class VendingMachineCLI {
 					System.out.println(item.toString());
 				}
 
-			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
+			} else if (choice.equals(MenuConstants.MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
-				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-				if (choice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
-					choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_FEED_OPTIONS);
-					if (choice.equals(PURCHASE_MENU_FEED_ONE_DOLLAR)) {
+				boolean purchaseMenu = true;
+				while (purchaseMenu) {
+				choice = (String) menu.getChoiceFromOptions(MenuConstants.PURCHASE_MENU_OPTIONS);
+				
+				
+				if (choice.equals(MenuConstants.PURCHASE_MENU_OPTION_FEED_MONEY)) {
+					choice = (String) menu.getChoiceFromOptions(MenuConstants.PURCHASE_MENU_FEED_OPTIONS);
+					if (choice.equals(MenuConstants.PURCHASE_MENU_FEED_ONE_DOLLAR)) {
 						logger.feedLogger(currentBalance, 1);
 						currentBalance = currentBalance.add(new BigDecimal(1.00).setScale(2));
 						System.out.println("Your current balance is now $" + currentBalance);
 
-					} else if (choice.equals(PURCHASE_MENU_FEED_TWO_DOLLARS)) {
-						printWriter.println(ts + " FEED MONEY: $" + currentBalance + " $"
-								+ currentBalance.add(new BigDecimal(2.00).setScale(2)));
+					} else if (choice.equals(MenuConstants.PURCHASE_MENU_FEED_TWO_DOLLARS)) {
+						logger.feedLogger(currentBalance, 2);
 						currentBalance = currentBalance.add(new BigDecimal(2.00));
 						System.out.println("Your current balance is now $" + currentBalance);
 
-					} else if (choice.equals(PURCHASE_MENU_FEED_FIVE_DOLLARS)) {
-						printWriter.println(ts + " FEED MONEY: $" + currentBalance + " $"
-								+ currentBalance.add(new BigDecimal(5.00).setScale(2)));
+					} else if (choice.equals(MenuConstants.PURCHASE_MENU_FEED_FIVE_DOLLARS)) {
+						logger.feedLogger(currentBalance, 5);
 						currentBalance = currentBalance.add(new BigDecimal(5.00));
 						System.out.println("Your current balance is now $" + currentBalance);
 
-					} else if (choice.equals(PURCHASE_MENU_FEED_TEN_DOLLARS)) {
-						printWriter.println(ts + " FEED MONEY: $" + currentBalance + " $"
-								+ currentBalance.add(new BigDecimal(10.00).setScale(2)));
+					} else if (choice.equals(MenuConstants.PURCHASE_MENU_FEED_TEN_DOLLARS)) {
+						logger.feedLogger(currentBalance, 10);
 						currentBalance = currentBalance.add(new BigDecimal(10.00));
 						System.out.println("Your current balance is now $" + currentBalance);
 					}
 
 				}
-				if (choice.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
+				if (choice.equals(MenuConstants.PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
 					System.out.println(String.format("%-5s %-20s     $%6s   %-8s %5s", "Slot", "Item Name", "Price",
 							"Type", "Quantity"));
 					System.out.println("==========================================================");
@@ -151,6 +153,7 @@ public class VendingMachineCLI {
 								System.out.println("Sorry, item is SOLD OUT");
 							} else
 							if (currentBalance.compareTo(item.getPrice()) >= 0) {
+								logger.purchaseLogger(currentBalance, item.getPrice(), item.getName(), item.getSlotLocation());
 								currentBalance = currentBalance.subtract(item.getPrice());
 								item.decrementStock();
 								System.out.println();
@@ -162,7 +165,8 @@ public class VendingMachineCLI {
 						}
 					}
 					
-				} else if(choice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)){
+				} else if(choice.equals(MenuConstants.PURCHASE_MENU_OPTION_FINISH_TRANSACTION)){
+					
 					int change = currentBalance.multiply(new BigDecimal(100)).intValue();
 					int dollars = Math.round((int)change/100);
 				    change=change%100;
@@ -173,25 +177,18 @@ public class VendingMachineCLI {
 				    int nickels = Math.round((int)change/5);
 				    change=change%5;
 				    int pennies = Math.round((int)change/1);
-					
-//					BigDecimal balanceInPennies = currentBalance.multiply(new BigDecimal(100));
-//					BigDecimal dollars = balanceInPennies.divide(new BigDecimal(100));
-//					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(100)));
-//					BigDecimal quarters = balanceInPennies.divide(new BigDecimal(25));
-//					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(25)));
-//					BigDecimal dimes = balanceInPennies.divide(new BigDecimal(10));
-//					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(10)));
-//					BigDecimal nickels = balanceInPennies.divide(new BigDecimal(5));
-//					balanceInPennies = balanceInPennies.subtract(dollars.multiply(new BigDecimal(5)));
-//					BigDecimal pennies = balanceInPennies;
+				    purchaseMenu = false;
+				    logger.changeLogger(currentBalance);
+				    currentBalance = new BigDecimal(0);
 					System.out.println("Your change is: " + dollars + " dollars, " + quarters + " quarters, " + dimes + " dimes, " + nickels + " nickels and " + pennies + " pennies");
 
-					
+				
 				}
 				
-				else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
+				else if (choice.equals(MenuConstants.MAIN_MENU_OPTION_EXIT)) {
 					
-					choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
+					choice = (String) menu.getChoiceFromOptions(MenuConstants.MAIN_MENU_OPTIONS);
+				}
 				}
 			}
 		}
